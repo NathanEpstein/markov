@@ -135,24 +135,3 @@ vector< vector<double> > CTMC(vector< vector<double> > trans, double T, int star
   };
   return myVec;
 };
-
-
-int main(){
-  vector< vector<double> > matrix (3);
-  for ( int i = 0 ; i < 3 ; i++ ){
-    matrix[i].resize(3);
-  };
-  matrix[0][1] = 1;
-  // matrix[0][2] = 0.75;
-  matrix[1][2] = 1;
-  matrix[2][0] = 1;
-
-  vector< vector<double> > results = CTMC(matrix,20,0);
-
-  cout<<"size: "<<results.size()<<"\n";
-  for(int i=0; i<results.size();i++){
-    cout<<"time: "<<results[i][0]<<"\n";
-    cout<<"state: "<<results[i][1]<<"\n";
-  };
-  return 1;
-}
