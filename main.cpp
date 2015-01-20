@@ -5,8 +5,6 @@
 
 using namespace std;
 
-// functions: GBM(done), BM(done), DTMC(done), CTMC, PoissP(done)
-
 //sorting function, to sort arrival times in poissP
 bool sortAsc(double i,double j){
   return (i<j);
@@ -91,24 +89,51 @@ vector< vector<double> > CTMC(vector< vector<double> > trans, double T, int star
   // results vector
   vector< vector<double> > myVec;
 
+  //include the beggining of the CTMC in the results
+  vector<double> myStep;
+  myStep.push_back(0); //start time
+  myStep.push_back(start); //start state
+  myVec.push_back(myStep); //initialize results vector
 
-  //simulate path
+  // local variables
   double t = 0;
-  double lambda = 0;
-  for (int i=0; i<trans[start].size();i++){
-    lambda += trans[start][i];
+  double lambda;
+  double U;
+  double sum;
+  int j;
+  int state;
+
+  //for each transition
+  while (t < T){
+    lambda = 0;
+    state = myStep[1];
+    for (int i=0; i<trans[state].size();i++){
+      lambda += trans[state][i];
+    };
+    exponential_distribution<> stepT(lambda);
+    t += stepT(gen);
+    if (t < T){
+      //determine new state
+      j = 0;
+      sum = 0;
+      U = generate_canonical<double,10>(gen);
+      while(sum < U){
+        sum += trans[state][j]/lambda;
+        if (sum > U){
+          //push time and state
+          myStep.clear();
+          myStep.push_back(t);
+          myStep.push_back(j);
+          myVec.push_back(myStep);
+        }
+        else{
+          j++;
+        };
+      };
+    };
+
   };
-
-
-    //1) start: t = 0
-    //2) t += outward transition time ~exp(lambda = sum(state_row))
-    //3)
-    // if t < T
-      // get next state via p(current_state -> state i) = state_row[i]/lambda
-      // save transition state/time pair
-      // go back to 2)
-    // else
-      // return transition history
+  return myVec;
 };
 
 
@@ -118,15 +143,17 @@ int main(){
   for ( int i = 0 ; i < 3 ; i++ ){
     matrix[i].resize(3);
   };
-  matrix[0][1] = 0.25;
-  matrix[0][2] = 0.75;
-  matrix[1][0] = 1;
+  matrix[0][1] = 1;
+  // matrix[0][2] = 0.75;
+  matrix[1][2] = 1;
   matrix[2][0] = 1;
 
-  vector< vector<double> > results = CTMC(matrix,1000,0);
+  vector< vector<double> > results = CTMC(matrix,20,0);
 
+  cout<<"size: "<<results.size()<<"\n";
   for(int i=0; i<results.size();i++){
-    cout<<results[i]<<"\n";
+    cout<<"time: "<<results[i][0]<<"\n";
+    cout<<"state: "<<results[i][1]<<"\n";
   };
 
   return 1;
