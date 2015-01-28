@@ -1,3 +1,7 @@
+#include <math.h>
+#include <vector>
+#include <random>
+
 bool sortAsc(double,double);
 
 std::vector<double>poissP(double, double);
