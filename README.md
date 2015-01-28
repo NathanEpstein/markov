@@ -34,7 +34,7 @@ int main(){
   double T = 10;
   std::vector<double> P = poissP(lambda,T) ;
 
-  return 1;
+  return 0;
 }
 ```
 
@@ -50,7 +50,7 @@ int main(){
   int steps = 100;
   std::vector<double> brown = brownian(mu,sigma,T,steps);
 
-  return 1;
+  return 0;
 }
 ```
 
@@ -67,7 +67,7 @@ int main(){
   int steps = 100;
   std::vector<double> geo = geoBrownian(S0,mu,sigma,T,steps);
 
-  return 1;
+  return 0;
 }
 ```
 
@@ -92,7 +92,7 @@ int main(){
   std::vector< std::vector<double> > continousMC = CTMC(matrix,T,start);
 
 
-  return 1;
+  return 0;
 }
 ```
 
