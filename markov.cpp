@@ -5,7 +5,7 @@
 //sorting function, to sort arrival times in poissP
 bool sortAsc(double i,double j){
   return (i<j);
-};
+}
 
 //Markov simulation functions
 std::vector<double>poissP(double lambda, double T){
@@ -18,11 +18,11 @@ std::vector<double>poissP(double lambda, double T){
   std::vector<double> myVec(n);
   for (int i=0; i<n; i++){
     myVec[i] = std::generate_canonical<double,10>(gen)*T;
-  };
+  }
   //sort the arrival times and return the vector
   sort(myVec.begin(),myVec.end(),sortAsc);
   return myVec;
-};
+}
 
 std::vector<double> brownian(double mu, double sigma, double T, int steps){
   double dt = T/steps;
@@ -37,9 +37,9 @@ std::vector<double> brownian(double mu, double sigma, double T, int steps){
   myVec[0] = 0;
   for(int i=0; i<steps; i++){
     myVec[i+1] = myVec[i] + norm(gen);
-  };
+  }
   return myVec;
-};
+}
 
 std::vector<double> geoBrownian(double S0,double mu,double sigma, double T, int steps){
   // generate BM vector
@@ -47,9 +47,9 @@ std::vector<double> geoBrownian(double S0,double mu,double sigma, double T, int 
   // and map each element
   for(int i=0; i<myVec.size();i++){
     myVec[i] = S0*exp(myVec[i]);
-  };
+  }
   return myVec;
-};
+}
 
 std::vector<int> DTMC (std::vector< std::vector<double> > trans, int steps, int start){
   //random generator
@@ -72,12 +72,12 @@ std::vector<int> DTMC (std::vector< std::vector<double> > trans, int steps, int 
       sum += trans[myVec[i]][count];
       if(sum > U){
         myVec[i+1] = count;
-      };
+      }
       count++;
-    };
-  };
+    }
+  }
   return myVec;
-};
+}
 
 std::vector< std::vector<double> > CTMC(std::vector< std::vector<double> > trans, double T, int start){
   //random generator
@@ -106,7 +106,7 @@ std::vector< std::vector<double> > CTMC(std::vector< std::vector<double> > trans
     state = myStep[1];
     for (int i=0; i<trans[state].size();i++){
       lambda += trans[state][i];
-    };
+    }
     std::exponential_distribution<> stepT(lambda);
     t += stepT(gen);
     if (t < T){
@@ -125,10 +125,10 @@ std::vector< std::vector<double> > CTMC(std::vector< std::vector<double> > trans
         }
         else{
           j++;
-        };
-      };
-    };
+        }
+      }
+    }
 
-  };
+  }
   return myVec;
-};
+}
