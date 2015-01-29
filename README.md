@@ -1,4 +1,4 @@
-#Markov.cpp
+#markov
 
 ##Usage
 
