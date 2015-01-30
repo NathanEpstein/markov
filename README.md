@@ -71,12 +71,12 @@ int main(){
 }
 ```
 
-#### Discrete and Continuous Time Markov Chains
+#### Discrete Time Markov Chains
 ```c++
 #include "../markov/markov.h"
 
 int main(){
-  //SIMULATE DISCRETE AND CONTINUOUS TIME MARKOV CHAINS
+  //SIMULATE DISCRETE TIME MARKOV CHAIN
   std::vector< std::vector<double> > matrix(3,std::vector<double> (3)); //initializes a 3x3 matrix with zeros
 
   //set transition matrix
@@ -87,15 +87,38 @@ int main(){
   int steps = 10;
   int start = 0;
   double T = 8.5;
-  //simulate discrete and continuous Markov Chains
+  //simulate discrete time Markov Chain
   std::vector<int> discreteMC = DTMC(matrix,steps,start);
-  std::vector< std::vector<double> > continousMC = CTMC(matrix,T,start);
-
 
   return 0;
 }
 ```
 
+#### Continuous Time Markov Chains
+```c++
+#include "../markov/markov.h"
+
+int main(){
+  //SIMULATE CONTINUOUS TIME MARKOV CHAIN
+  std::vector< std::vector<double> > matrix(3,std::vector<double> (3)); //initializes a 3x3 matrix with zeros
+
+  //set transition matrix
+  matrix[0][1] = 1;
+  matrix[1][2] = 1;
+  matrix[2][0] = 1;
+
+  int start = 0;
+  double T = 8.5;
+  //simulate continuous time Markov Chain
+  CTMC continuousMC(matrix);
+  continuousMC.simulate(10,0);
+
+  std::vector<double> times = continuousMC.transTimes();
+  std::vector<int> states = continuousMC.getStates();
+
+  return 0;
+}
+```
 ## License
 
 **The MIT License (MIT)**
