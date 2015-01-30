@@ -119,6 +119,11 @@ int main(){
   return 0;
 }
 ```
+
+### Previous Version
+
+This library initially implemented CTMC as a function which returned a matrix instead of a class. To access the original (deprecated) version use `git clone -b v1 https://github.com/NathanEpstein/markov.git`
+
 ## License
 
 **The MIT License (MIT)**
