@@ -79,59 +79,6 @@ std::vector<int> DTMC (std::vector< std::vector<double> > trans, int steps, int 
   return myVec;
 }
 
-// std::vector< std::vector<double> > CTMC(std::vector< std::vector<double> > trans, double T, int start){
-//   //random generator
-//   std::random_device rd;
-//   std::mt19937 gen(rd());
-//   // results vector
-//   std::vector< std::vector<double> > myVec;
-
-//   //include the beggining of the CTMC in the results
-//   std::vector<double> myStep;
-//   myStep.push_back(0); //start time
-//   myStep.push_back(start); //start state
-//   myVec.push_back(myStep); //initialize results vector
-
-//   // local variables
-//   double t = 0;
-//   double lambda;
-//   double U;
-//   double sum;
-//   int j;
-//   int state;
-
-//   //for each transition
-//   while (t < T){
-//     lambda = 0;
-//     state = myStep[1];
-//     for (int i=0; i<trans[state].size();i++){
-//       lambda += trans[state][i];
-//     }
-//     std::exponential_distribution<> stepT(lambda);
-//     t += stepT(gen);
-//     if (t < T){
-//       //determine new state
-//       j = 0;
-//       sum = 0;
-//       U = std::generate_canonical<double,10>(gen);
-//       while(sum < U){
-//         sum += trans[state][j]/lambda;
-//         if (sum > U){
-//           //push time and state
-//           myStep.clear();
-//           myStep.push_back(t);
-//           myStep.push_back(j);
-//           myVec.push_back(myStep);
-//         }
-//         else{
-//           j++;
-//         }
-//       }
-//     }
-//   }
-//   return myVec;
-// }
-
 // BEGIN CTMC CLASS:
 class CTMC{
 public:
@@ -163,7 +110,6 @@ void CTMC::simulate(double T, int state){
   std::mt19937 gen(rd());
 
   //include the beggining of the CTMC in the results
-  std::vector<double> myStep;
   times.push_back(0); //start time
   states.push_back(state); //start state
 
@@ -173,12 +119,12 @@ void CTMC::simulate(double T, int state){
   double U;
   double sum;
   int j;
-  int state;
+  std::vector< std::vector<double> > trans = matrix;
 
   //for each transition
   while (t < T){
     lambda = 0;
-    state = myStep[1];
+    state = states.back();
     for (int i=0; i<trans[state].size();i++){
       lambda += trans[state][i];
     }
