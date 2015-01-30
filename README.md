@@ -111,7 +111,7 @@ int main(){
   double T = 8.5;
   //simulate continuous time Markov Chain
   CTMC continuousMC(matrix);
-  continuousMC.simulate(10,0);
+  continuousMC.simulate(T,start);
 
   std::vector<double> times = continuousMC.transTimes();
   std::vector<int> states = continuousMC.getStates();
